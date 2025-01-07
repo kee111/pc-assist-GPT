@@ -68,7 +68,13 @@ def generate_advice(user_question, messages):
         )
         # 使用されたモデルを表示
         print(f"\n使用モデル: {response['model']}")
-        
+
+        # トークン数の表示
+        prompt_tokens = response["usage"]["prompt_tokens"]
+        completion_tokens = response["usage"]["completion_tokens"]
+        total_tokens = response["usage"]["total_tokens"]
+        print(f"今回使用したトークン数: {total_tokens} (入力: {prompt_tokens}, 出力: {completion_tokens})")
+
         # アシスタントの応答を履歴に追加
         assistant_reply = response["choices"][0]["message"]["content"].strip()
         messages.append({"role": "assistant", "content": assistant_reply})
@@ -84,7 +90,7 @@ def generate_advice(user_question, messages):
 if __name__ == "__main__":
     # 会話履歴を初期化
     messages = [{"role": "system", "content": "You are a helpful assistant with expertise in computer hardware."}]
-    
+
     while True:
         print("\n1. パーツ情報を追加")
         print("2. パーツ情報を表示")
