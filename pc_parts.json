@@ -1,6 +1,25 @@
 {
     "pc_parts": [
         {
+            "part_name": "Gaming Mouse",
+            "part_value": "VGN VXE R1 SE Wireless Gaming Mouse – Black",
+            "details": {
+                "connection": "Wired / 2.4G / Bluetooth",
+                "sensor": "PAW3395 SE",
+                "weight": "51g",
+                "dimensions": "120.6mm x 64.0mm x 37.8mm",
+                "battery": "500mAh, 35 hours (1000Hz), up to 130 hours with energy-saving",
+                "main_button_switches": "Huano, 60 million clicks",
+                "scroll_wheel": "Kailh GE Upgraded / TTC Silver Wheel",
+                "receiver": "Standard 2.4G Receiver",
+                "polling_rate": "125~2000Hz (2K polling rate requires 2K receiver)",
+                "feet": "High-Speed PTFE Feet",
+                "chip": "BK VGN Customized Nordic Chipset",
+                "features": "Low latency, ergonomic design, customizable via VHUB software",
+                "warranty": "1 Year"
+            }
+        },
+        {
             "part_name": "CPU Cooler",
             "part_value": "ID-COOLING FROZN A410 BLACK",
             "details": {

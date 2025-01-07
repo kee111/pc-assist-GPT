@@ -16,11 +16,14 @@ JSON_FILE = "pc_parts.json"
 # JSONファイルからパーツ情報を読み込む
 def load_json():
     try:
-        with open(JSON_FILE, "r") as file:
+        with open(JSON_FILE, "r", encoding='utf-8') as file:
             data = json.load(file)
-            return data.get("pc_parts", [])  # "pc_parts" キーを直接取得
+            return data.get("pc_parts", [])
     except FileNotFoundError:
-        return []  # ファイルが存在しない場合は空のリストを返す
+        return []
+    except json.JSONDecodeError as e:
+        print(f"JSONの解析エラー: {e}")
+        return []
 
 # JSONファイルにデータを書き込む
 def save_json(parts):
@@ -49,7 +52,19 @@ def generate_advice(user_question, messages):
     if not parts:
         return "パーツ情報が登録されていません。"
 
-    parts_text = "\n".join([f"{part['part_name']}: {part['part_value']}" for part in parts])
+    # パーツ情報のフォーマットを改善
+    parts_text = ""
+    for part in parts:
+        parts_text += f"\n{part['part_name']}:\n"
+        if isinstance(part['part_value'], dict):
+            for key, value in part['part_value'].items():
+                parts_text += f"  - {key}: {value}\n"
+        elif isinstance(part.get('details'), dict):
+            parts_text += f"  基本情報: {part['part_value']}\n"
+            for key, value in part['details'].items():
+                parts_text += f"  - {key}: {value}\n"
+        else:
+            parts_text += f"  {part['part_value']}\n"
 
     # ユーザーメッセージを履歴に追加
     messages.append({"role": "user", "content": f"PCパーツ情報:\n{parts_text}\n\n質問: {user_question}"})
