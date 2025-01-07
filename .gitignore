@@ -1,0 +1,28 @@
+# 環境変数ファイル
+apikey.env
+
+# macOS
+.DS_Store
+
+# Pythonキャッシュファイル
+__pycache__/
+*.py[cod]
+*.pyo
+
+# 環境設定
+.env
+*.env
+
+# エディタ関連ファイル
+.vscode/
+.idea/
+*.swp
+
+# ログファイル
+*.log
+*.tmp
+
+# Pipenv, Poetry などの仮想環境
+pip-log.txt
+pip-delete-this-directory.txt
+*.venv/

@@ -1,0 +1,40 @@
+{
+    "pc_parts": [
+        {
+            "part_name": "CPU Cooler",
+            "part_value": "ID-COOLING FROZN A410 BLACK"
+        },
+        {
+            "part_name": "Power Supply Unit",
+            "part_value": "Thermaltake Smart Pro 600W 80PLUS Standard"
+        },
+        {
+            "part_name": "Case",
+            "part_value": "Thermaltake S100 TG 強化ガラス ミニタワー"
+        },
+        {
+            "part_name": "Memory",
+            "part_value": "シリコンパワー DDR4 3200 16GB x 2 (32GB)"
+        },
+        {
+            "part_name": "Processor",
+            "part_value": "AMD Ryzen 7 5700X without cooler"
+        },
+        {
+            "part_name": "Storage",
+            "part_value": "Hanye SSD 2TB PCIe Gen4x4 M.2 NVMe"
+        },
+        {
+            "part_name": "Motherboard",
+            "part_value": "ASRock B550M Steel Legend"
+        },
+        {
+            "part_name": "Operating System",
+            "part_value": "Windows 11 DSP 日本語版 (Home ライセンスキー)"
+        },
+        {
+            "part_name": "Graphics Card",
+            "part_value": "MSI GeForce RTX 4060 VENTUS 2X BLACK 8G OC"
+        }
+    ]
+}
