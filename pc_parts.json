@@ -2,39 +2,115 @@
     "pc_parts": [
         {
             "part_name": "CPU Cooler",
-            "part_value": "ID-COOLING FROZN A410 BLACK"
+            "part_value": "ID-COOLING FROZN A410 BLACK",
+            "details": {
+                "compatibility": "Intel LGA1851/1700/1200/1151/1150/1155/1156, AMD AM5/AM4",
+                "tdp": "220W",
+                "dimensions": "120×73×152mm (L×W×H)",
+                "heatsink_material": "4×Ф6mm Heatpipe (Direct Touch) + Aluminum Fin",
+                "weight": "720g (heatsink+fan)",
+                "fan_speed": "500±200 ~ 2000±10% RPM",
+                "max_air_flow": "78.25CFM",
+                "max_static_pressure": "2.68mmH2O",
+                "noise": "29.85dB(A) Max.",
+                "bearing_type": "FDB",
+                "connector": "4Pin PWM",
+                "voltage": "12VDC"
+            }
         },
         {
             "part_name": "Power Supply Unit",
-            "part_value": "Thermaltake Smart Pro 600W 80PLUS Standard"
+            "part_value": "Thermaltake Smart Pro 600W 80PLUS Standard",
+            "details": {
+                "power": "600W Single +12V Rail",
+                "fan": "120mm Cooling Fan",
+                "certification": "80PLUS Standard",
+                "connectors": {
+                    "pcie": "2",
+                    "sata": "6",
+                    "4pin": "3"
+                },
+                "efficiency": "82 to 86% at 20 to 100% Load",
+                "mtbf": "100,000 hours"
+            }
         },
         {
             "part_name": "Case",
-            "part_value": "Thermaltake S100 TG 強化ガラス ミニタワー"
+            "part_value": "Thermaltake S100 TG 強化ガラス ミニタワー",
+            "details": {
+                "motherboard_compatibility": "Micro ATX, Mini-ITX",
+                "material": "強化ガラス",
+                "dimensions": "44.1 x 22 x 41.1 cm",
+                "weight": "6.1kg",
+                "cooling_support": "最大280mmの水冷ラジエータ",
+                "expansion_card_space": "最大330mm",
+                "ports": {
+                    "usb2.0": "2",
+                    "usb3.0": "1"
+                }
+            }
         },
         {
             "part_name": "Memory",
-            "part_value": "シリコンパワー DDR4 3200 16GB x 2 (32GB)"
+            "part_value": "シリコンパワー DDR4 3200 16GB x 2 (32GB)",
+            "details": {
+                "type": "DDR4 SDRAM",
+                "capacity": "32GB (16GB x 2)",
+                "speed": "3200MHz",
+                "voltage": "1.2V",
+                "features": "JEDEC規格, 無期限保証"
+            }
         },
         {
             "part_name": "Processor",
-            "part_value": "AMD Ryzen 7 5700X without cooler"
+            "part_value": "AMD Ryzen 7 5700X without cooler",
+            "details": {
+                "cores_threads": "8 cores / 16 threads",
+                "base_clock": "3.4GHz",
+                "boost_clock": "4.6GHz",
+                "tdp": "65W",
+                "socket": "Socket AM4",
+                "pci_version": "PCIe 4.0"
+            }
         },
         {
             "part_name": "Storage",
-            "part_value": "Hanye SSD 2TB PCIe Gen4x4 M.2 NVMe"
+            "part_value": "Hanye SSD 2TB PCIe Gen4x4 M.2 NVMe",
+            "details": {
+                "capacity": "2TB",
+                "interface": "PCIe Gen4x4",
+                "read_speed": "7450MB/s",
+                "write_speed": "6700MB/s",
+                "features": "高耐久3D NAND TLC, PS5対応, ヒートシンク搭載",
+                "dimensions": "80.0 x 22.0 x 2.05 mm (ヒートシンク含む: 80.0 x 23.3 x 8.5 mm)"
+            }
         },
         {
             "part_name": "Motherboard",
-            "part_value": "ASRock B550M Steel Legend"
-        },
-        {
-            "part_name": "Operating System",
-            "part_value": "Windows 11 DSP 日本語版 (Home ライセンスキー)"
+            "part_value": "ASRock B550M Steel Legend",
+            "details": {
+                "cpu_support": "AMD AM4 Ryzen 3000-5000シリーズ",
+                "memory_support": "DDR4 4733+ (OC)",
+                "slots": {
+                    "pcie": "1 PCIe 4.0 x16, 1 PCIe 3.0 x16, 1 PCIe 3.0 x1",
+                    "m2": "1 Hyper M.2 (PCIe Gen4 x4), 1 M.2 (PCIe Gen3 x2 & SATA3)"
+                },
+                "ports": {
+                    "usb3.2_gen2": "2 (Rear Type A+C)",
+                    "usb3.2_gen1": "8 (4 Front, 4 Rear)"
+                },
+                "network": "Dragon 2.5G LAN"
+            }
         },
         {
             "part_name": "Graphics Card",
-            "part_value": "MSI GeForce RTX 4060 VENTUS 2X BLACK 8G OC"
+            "part_value": "MSI GeForce RTX 4060 VENTUS 2X BLACK 8G OC",
+            "details": {
+                "gpu": "NVIDIA GeForce RTX 4060",
+                "vram": "8GB GDDR6",
+                "memory_clock": "2505MHz",
+                "features": "Ray Tracing, DLSS 3, HDMI 2.1a x1, DisplayPort 1.4a x3"
+            }
         }
     ]
 }

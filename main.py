@@ -2,6 +2,7 @@ import json
 import openai
 from dotenv import load_dotenv
 import os
+from tabulate import tabulate  # テーブル形式表示のためにインポート
 
 # .envファイルを読み込む
 load_dotenv("apikey.env")
@@ -11,9 +12,6 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # JSONファイルのパス
 JSON_FILE = "pc_parts.json"
-
-# 履歴を保持するリスト
-messages = [{"role": "system", "content": "You are a helpful assistant with expertise in computer hardware."}]
 
 # JSONファイルからパーツ情報を読み込む
 def load_json():
@@ -36,18 +34,17 @@ def add_part(part_name, part_value):
     save_json(parts)
     print(f"{part_name} を {part_value} として追加しました。")
 
-# パーツ情報を表示
+# パーツ情報をテーブル形式で表示
 def show_parts():
     parts = load_json()
     if not parts:
         print("パーツ情報が登録されていません。")
     else:
-        print("登録されているパーツ情報:")
-        for idx, part in enumerate(parts, start=1):
-            print(f"{idx}. {part['part_name']}: {part['part_value']}")
+        table = [[idx + 1, part['part_name'], part['part_value']] for idx, part in enumerate(parts)]
+        print(tabulate(table, headers=["#", "Part Name", "Details"], tablefmt="grid"))
 
 # OpenAI APIを使ってアドバイスを生成
-def generate_advice(user_question):
+def generate_advice(user_question, messages):
     parts = load_json()
     if not parts:
         return "パーツ情報が登録されていません。"
@@ -57,13 +54,16 @@ def generate_advice(user_question):
     # ユーザーメッセージを履歴に追加
     messages.append({"role": "user", "content": f"PCパーツ情報:\n{parts_text}\n\n質問: {user_question}"})
 
+    # トークン数計算で動的に最大値を調整
+    max_allowed_tokens = 4096  # gpt-4o の最大トークン
+    used_tokens = sum(len(message['content']) for message in messages)
+    max_tokens = max(1000, max_allowed_tokens - used_tokens - 500)  # 最小値を1000トークンに設定
 
-# モデルやトークンを指定する
     try:
         response = openai.ChatCompletion.create(
             model="gpt-4o",
             messages=messages,
-            max_tokens=3000,
+            max_tokens=max_tokens,
             temperature=0.7
         )
         # 使用されたモデルを表示
@@ -75,16 +75,22 @@ def generate_advice(user_question):
         return assistant_reply
     except openai.error.RateLimitError:
         return "APIのクォータを超えたか、一時的に制限されています。少し時間を置いて再試行してください。"
+    except openai.error.AuthenticationError:
+        return "APIキーが無効です。正しいキーを設定してください。"
     except Exception as e:
         return f"予期しないエラーが発生しました: {str(e)}"
 
 # メインプログラム
 if __name__ == "__main__":
+    # 会話履歴を初期化
+    messages = [{"role": "system", "content": "You are a helpful assistant with expertise in computer hardware."}]
+    
     while True:
         print("\n1. パーツ情報を追加")
         print("2. パーツ情報を表示")
         print("3. GPTにアドバイスをもらう")
-        print("4. 終了")
+        print("4. 会話履歴を表示")
+        print("5. 終了")
         choice = input("選択肢を入力してください: ")
 
         if choice == "1":
@@ -96,9 +102,13 @@ if __name__ == "__main__":
         elif choice == "3":
             user_question = input("質問を入力してください (例: マザーボードの最新バージョンを確認して): ")
             print("GPTからのアドバイスを生成中...")
-            advice = generate_advice(user_question)
+            advice = generate_advice(user_question, messages)
             print(f"GPTからのアドバイス:\n{advice}")
         elif choice == "4":
+            print("\n会話履歴:")
+            for message in messages:
+                print(f"{message['role'].capitalize()}: {message['content']}")
+        elif choice == "5":
             print("終了します。")
             break
         else:
