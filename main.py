@@ -101,4 +101,4 @@ if __name__ == "__main__":
             print("終了します。")
             break
         else:
-            print("無効な選択肢です。")
+            print("無効な選択肢です。");print(f"使用しているAPIキー: {openai.api_key[:10]}********")
