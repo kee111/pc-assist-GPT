@@ -1,7 +1,7 @@
 import json
 import openai
-from dotenv import load_dotenv  # dotenvをインポート
-import os  # osモジュールをインポート
+from dotenv import load_dotenv
+import os
 
 # .envファイルを読み込む
 load_dotenv("apikey.env")
@@ -11,6 +11,9 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # JSONファイルのパス
 JSON_FILE = "pc_parts.json"
+
+# 履歴を保持するリスト
+messages = [{"role": "system", "content": "You are a helpful assistant with expertise in computer hardware."}]
 
 # JSONファイルからパーツ情報を読み込む
 def load_json():
@@ -44,59 +47,39 @@ def show_parts():
             print(f"{idx}. {part['part_name']}: {part['part_value']}")
 
 # OpenAI APIを使ってアドバイスを生成
-def generate_advice(user_question, model_name):
+def generate_advice(user_question):
     parts = load_json()
     if not parts:
         return "パーツ情報が登録されていません。"
 
     parts_text = "\n".join([f"{part['part_name']}: {part['part_value']}" for part in parts])
 
-    prompt = f"""
-    以下は現在登録されているPCパーツ情報です。この情報をもとに、以下の質問に答えてください:
-    PCパーツ情報:
-    {parts_text}
+    # ユーザーメッセージを履歴に追加
+    messages.append({"role": "user", "content": f"PCパーツ情報:\n{parts_text}\n\n質問: {user_question}"})
 
-    質問: {user_question}
-    """
+
+# モデルやトークンを指定する
     try:
         response = openai.ChatCompletion.create(
-            model=model_name,  # 選択されたモデルを使用
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant with expertise in computer hardware."},
-                {"role": "user", "content": prompt}
-            ],
+            model="gpt-4o",
+            messages=messages,
             max_tokens=3000,
             temperature=0.7
         )
-        return response["choices"][0]["message"]["content"].strip()
+        # 使用されたモデルを表示
+        print(f"\n使用モデル: {response['model']}")
+        
+        # アシスタントの応答を履歴に追加
+        assistant_reply = response["choices"][0]["message"]["content"].strip()
+        messages.append({"role": "assistant", "content": assistant_reply})
+        return assistant_reply
     except openai.error.RateLimitError:
         return "APIのクォータを超えたか、一時的に制限されています。少し時間を置いて再試行してください。"
     except Exception as e:
         return f"予期しないエラーが発生しました: {str(e)}"
 
-def select_gpt_model():
-    models = {
-        '1': 'gpt-3.5-turbo',
-        '2': 'gpt-4',
-        '3': 'gpt-4-turbo-preview'
-    }
-    
-    print("\nGPTモデルを選択してください:")
-    print("1: GPT-3.5 Turbo (高速・経済的)")
-    print("2: GPT-4 (高性能)")
-    print("3: GPT-4 Turbo Preview (最新・高性能)")
-    
-    while True:
-        choice = input("選択 (1-3): ")
-        if choice in models:
-            return models[choice]
-        print("無効な選択です。1-3の数字を入力してください。")
-
 # メインプログラム
 if __name__ == "__main__":
-    selected_model = select_gpt_model()
-    print(f"\n選択されたモデル: {selected_model}")
-    
     while True:
         print("\n1. パーツ情報を追加")
         print("2. パーツ情報を表示")
@@ -113,7 +96,7 @@ if __name__ == "__main__":
         elif choice == "3":
             user_question = input("質問を入力してください (例: マザーボードの最新バージョンを確認して): ")
             print("GPTからのアドバイスを生成中...")
-            advice = generate_advice(user_question, selected_model)
+            advice = generate_advice(user_question)
             print(f"GPTからのアドバイス:\n{advice}")
         elif choice == "4":
             print("終了します。")
